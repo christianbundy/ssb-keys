@@ -1,11 +1,10 @@
 'use strict'
 
 function isFunction (f) {
-  return 'function' == typeof f
+  return typeof f === 'function'
 }
 
 module.exports = function (generate) {
-
   function create (filename, feedType, legacy) {
     var keys = generate(feedType, legacy)
     localStorage[filename] = JSON.stringify(keys)
@@ -18,11 +17,9 @@ module.exports = function (generate) {
 
   return {
     createSync: create,
-    create: function(filename, feedType, legacy, cb) {
-      if(isFunction(legacy))
-        cb = legacy, legacy = null
-      if(isFunction(feedType))
-        cb = feedType, feedType = null
+    create: function (filename, feedType, legacy, cb) {
+      if (isFunction(legacy)) { cb = legacy, legacy = null }
+      if (isFunction(feedType)) { cb = feedType, feedType = null }
       cb(null, create(filename, feedType, legacy))
     },
     loadSync: load,
@@ -30,7 +27,4 @@ module.exports = function (generate) {
       cb(null, load(filename))
     }
   }
-
 }
-
-
