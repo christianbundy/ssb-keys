@@ -139,22 +139,28 @@ function verify (keys, sig, msg) {
 
 // OTHER CRYTPO FUNCTIONS
 
-exports.signObj = function (keys, hmac_key, obj) {
-  if (!obj) obj = hmac_key, hmac_key = null
+exports.signObj = function (keys, hmacKey, obj) {
+  if (!obj) {
+    obj = hmacKey
+    hmacKey = null
+  }
   var _obj = clone(obj)
   var b = Buffer.from(JSON.stringify(_obj, null, 2))
-  if (hmac_key) b = hmac(b, u.toBuffer(hmac_key))
+  if (hmacKey) b = hmac(b, u.toBuffer(hmacKey))
   _obj.signature = sign(keys, b)
   return _obj
 }
 
-exports.verifyObj = function (keys, hmac_key, obj) {
-  if (!obj) obj = hmac_key, hmac_key = null
+exports.verifyObj = function (keys, hmacKey, obj) {
+  if (!obj) {
+    obj = hmacKey
+    hmacKey = null
+  }
   obj = clone(obj)
   var sig = obj.signature
   delete obj.signature
   var b = Buffer.from(JSON.stringify(obj, null, 2))
-  if (hmac_key) b = hmac(b, u.toBuffer(hmac_key))
+  if (hmacKey) b = hmac(b, u.toBuffer(hmacKey))
   return verify(keys, sig, b)
 }
 

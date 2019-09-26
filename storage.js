@@ -75,8 +75,14 @@ module.exports = function (generate) {
   }
 
   exports.create = function (filename, feedType, legacy, cb) {
-    if (isFunction(legacy)) { cb = legacy, legacy = null }
-    if (isFunction(feedType)) { cb = feedType, feedType = null }
+    if (isFunction(legacy)) {
+      cb = legacy
+      legacy = null
+    }
+    if (isFunction(feedType)) {
+      cb = feedType
+      feedType = null
+    }
 
     filename = toFile(filename)
     var keys = generate(feedType)

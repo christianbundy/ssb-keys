@@ -46,39 +46,39 @@ tape('sign and verify a javascript object', function (t) {
 // (i.e. testnet) avoiding chosen protocol attacks.
 tape('sign and verify a hmaced object javascript object', function (t) {
   var obj = require('../package.json')
-  var hmac_key = crypto.randomBytes(32)
-  var hmac_key2 = crypto.randomBytes(32)
+  var hmacKey = crypto.randomBytes(32)
+  var hmacKey2 = crypto.randomBytes(32)
 
   var keys = ssbkeys.generate()
-  var sig = ssbkeys.signObj(keys.private, hmac_key, obj)
+  var sig = ssbkeys.signObj(keys.private, hmacKey, obj)
   console.log(sig)
   t.ok(sig)
   // verify must be passed the key to correctly verify
   t.notOk(ssbkeys.verifyObj(keys, sig))
   t.notOk(ssbkeys.verifyObj({ public: keys.public }, sig))
-  t.ok(ssbkeys.verifyObj(keys, hmac_key, sig))
-  t.ok(ssbkeys.verifyObj({ public: keys.public }, hmac_key, sig))
+  t.ok(ssbkeys.verifyObj(keys, hmacKey, sig))
+  t.ok(ssbkeys.verifyObj({ public: keys.public }, hmacKey, sig))
   // a different hmac_key fails to verify
-  t.notOk(ssbkeys.verifyObj(keys, hmac_key2, sig))
-  t.notOk(ssbkeys.verifyObj({ public: keys.public }, hmac_key2, sig))
+  t.notOk(ssbkeys.verifyObj(keys, hmacKey2, sig))
+  t.notOk(ssbkeys.verifyObj({ public: keys.public }, hmacKey2, sig))
 
   // assert that hmac_key may also be passed as base64
 
-  hmac_key = hmac_key.toString('base64')
-  hmac_key2 = hmac_key2.toString('base64')
+  hmacKey = hmacKey.toString('base64')
+  hmacKey2 = hmacKey2.toString('base64')
 
   var otherKeys = ssbkeys.generate()
-  var otherSig = ssbkeys.signObj(otherKeys.private, hmac_key, obj)
+  var otherSig = ssbkeys.signObj(otherKeys.private, hmacKey, obj)
   console.log(sig)
   t.ok(sig)
   // verify must be passed the key to correctly verify
   t.notOk(ssbkeys.verifyObj(otherKeys, otherSig))
   t.notOk(ssbkeys.verifyObj({ public: otherKeys.public }, otherSig))
-  t.ok(ssbkeys.verifyObj(keys, hmac_key, sig))
-  t.ok(ssbkeys.verifyObj({ public: otherKeys.public }, hmac_key, otherSig))
+  t.ok(ssbkeys.verifyObj(keys, hmacKey, sig))
+  t.ok(ssbkeys.verifyObj({ public: otherKeys.public }, hmacKey, otherSig))
   // a different hmac_key fails to verify
-  t.notOk(ssbkeys.verifyObj(otherKeys, hmac_key2, otherSig))
-  t.notOk(ssbkeys.verifyObj({ public: otherKeys.public }, hmac_key2, otherSig))
+  t.notOk(ssbkeys.verifyObj(otherKeys, hmacKey2, otherSig))
+  t.notOk(ssbkeys.verifyObj({ public: otherKeys.public }, hmacKey2, otherSig))
 
   t.end()
 })
