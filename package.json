@@ -13,11 +13,20 @@
     "private-box": "^0.3.0"
   },
   "devDependencies": {
+    "@types/node": "^13.1.8",
     "tape": "^3.0.3"
   },
   "scripts": {
     "test": "tape test/*"
   },
   "author": "Paul Frazee <pfrazee@gmail.com>",
-  "license": "MIT"
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/ssbc/ssb-keys/issues"
+  },
+  "main": "index.js",
+  "directories": {
+    "test": "test"
+  },
+  "keywords": []
 }
